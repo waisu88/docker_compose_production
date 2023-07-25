@@ -29,6 +29,8 @@ services:
       context: ./frontend_production
     command: >
       sh -c "npm start"
+    ports:
+      - 3000:3000
     volumes:
       - frontend_production_build:/frontend_production/build
 
