@@ -24,6 +24,13 @@ services:
     depends_on:
       - db
 
+  frontend:
+    build:
+      context: ./frontend_production
+    command: >
+      sh -c "npm start"
+    volumes:
+      - frontend_production_build:/frontend_production/build
 
   db:
     image: postgres:13-alpine
@@ -33,3 +40,5 @@ services:
       - POSTGRES_PASSWORD=changeme
   
   
+volumes:
+  frontend_production_build:
