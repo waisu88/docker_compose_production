@@ -1,6 +1,5 @@
 version: "3.9"
 
-
 services:
   app:
     build:
@@ -23,16 +22,6 @@ services:
       - DB_PASS=changeme
     depends_on:
       - db
-
-  # frontend:
-  #   build:
-  #     context: ./frontend_production
-  #   command: >
-  #     sh -c "npm start"
-  #   ports:
-  #     - 3000:3000
-  #   volumes:
-  #     - frontend_production_build:/frontend_production/build
 
   db:
     image: postgres:13-alpine
