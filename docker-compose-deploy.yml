@@ -1,32 +1,34 @@
-version: "3.9"
-
+version: '3.9'
 
 services:
   app:
-    build: 
+    build:
       context: .
     restart: always
     volumes: 
       - static-data:/vol/web
     environment:
       - DB_HOST=db
-      - DB_NAME=${DB_NAME}  
+      - DB_NAME=${DB_NAME}
       - DB_USER=${DB_USER}
       - DB_PASS=${DB_PASS}
       - SECRET_KEY=${SECRET_KEY}
       - ALLOWED_HOSTS=${ALLOWED_HOSTS}
     depends_on:
       - db
-    
+    ports:
+      - 8000:8000
   db:
     image: postgres:13-alpine
-    restart: always
+    restart: unless-stopped
     volumes:
       - postgres-data:/var/lib/postgresql/data
     environment:
       - POSTGRES_DB=${DB_NAME}
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_PASS}
+    expose:
+      - 5432
 
   proxy:
     build:
@@ -38,7 +40,53 @@ services:
       - 80:8000
     volumes:
       - static-data:/vol/static
-  
+
+  celery:
+    restart: unless-stopped
+    build: 
+      context: .
+    command: >
+      sh -c "celery -A app.celery worker --pool=solo -l info"
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+      - SECRET_KEY=${SECRET_KEY}
+      - DEBUG=1
+      - DB_HOST=db
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+    depends_on:
+      - db
+      - redis
+    
+  celery-beat:
+    restart: unless-stopped
+    build: 
+      context: .
+    command: >
+      sh -c "celery -A app beat -l INFO"
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+      - SECRET_KEY=${SECRET_KEY}
+      - DEBUG=1
+      - DB_HOST=db
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+    depends_on:
+      - db
+      - redis
+
+  redis:
+    restart: unless-stopped
+    image: redis:7.0.5-alpine
+    expose:
+      - 6379
+
+
+
 volumes:
   postgres-data:
   static-data:

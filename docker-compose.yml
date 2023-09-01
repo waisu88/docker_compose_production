@@ -20,6 +20,8 @@ services:
       - DB_NAME=devdb
       - DB_USER=devuser
       - DB_PASS=changeme
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
     depends_on:
       - db
 
@@ -30,6 +32,50 @@ services:
       - POSTGRES_USER=devuser
       - POSTGRES_PASSWORD=changeme
   
+  celery:
+    restart: unless-stopped
+    build: 
+      context: .
+    command: >
+      sh -c "celery -A app.celery worker --pool=solo -l info"
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+      - SECRET_KEY=devsecretkey
+      - DEBUG=1
+      - DB_HOST=db
+      - DB_NAME=devdb
+      - DB_USER=devuser
+      - DB_PASS=changeme
+    depends_on:
+      - db
+      - redis
+      - app
+    
+  celery-beat:
+    restart: unless-stopped
+    build: 
+      context: .
+    command: >
+      sh -c "celery -A app beat -l INFO"
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+      - SECRET_KEY=devsecretkey
+      - DEBUG=1
+      - DB_HOST=db
+      - DB_NAME=devdb
+      - DB_USER=devuser
+      - DB_PASS=changeme
+    depends_on:
+      - db
+      - redis
+      - app
+
+  redis:
+    restart: unless-stopped
+    image: redis:7.0.5-alpine
+    expose:
+      - 6379
   
-volumes:
-  frontend_production_build:
+  
