@@ -23,6 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('weather/', include('weatherapp.urls')),
     path('api/', include('api.urls')),
+    path('', include('szymon_site.urls')),
 ]
 
 if settings.DEBUG:
@@ -30,3 +31,4 @@ if settings.DEBUG:
         settings.MEDIA_URL,
         document_root=settings.MEDIA_ROOT,
         )
+    

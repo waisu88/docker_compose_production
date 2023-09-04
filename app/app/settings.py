@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'core',
     'api',
     'weatherapp',
+    'szymon_site',
 ]
 
 MIDDLEWARE = [
@@ -71,7 +72,9 @@ ROOT_URLCONF = 'app.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            'szymon_site/templates/szymon_site',
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -142,9 +145,12 @@ STATIC_URL = '/static/static/'
 
 MEDIA_URL = '/static/media/'
 
-MEDIA_ROOT = '/vol/web/media/'
+MEDIA_ROOT = '/vol/web/media/' 
 STATIC_ROOT = '/vol/web/static/'
 
+STATICFILES_DIRS = [
+    BASE_DIR / 'szymon_site/static',
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
