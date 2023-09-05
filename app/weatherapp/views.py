@@ -1,6 +1,6 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-
+from rest_framework import generics
 from .models import SynopticData
 from .serializers import SynopticDataSerializer
 # Create your views here.
@@ -16,12 +16,17 @@ def api_overview(request):
     return Response(routes)
 
 
+class SynopticDataList(generics.ListAPIView):
+    queryset = SynopticData.objects.all()
+    serializer_class = SynopticDataSerializer
+    
+synoptic_data_list = SynopticDataList.as_view()
 
-@api_view(['GET'])
-def synoptic_data_list(request):
-    synoptic_data = SynopticData.objects.all()
-    serializer = SynopticDataSerializer(synoptic_data, many=True)
-    return Response(serializer.data)
+# @api_view(['GET'])
+# def synoptic_data_list(request):
+#     synoptic_data = SynopticData.objects.all()
+#     serializer = SynopticDataSerializer(synoptic_data, many=True)
+#     return Response(serializer.data)
 
 
 @api_view(['GET'])
