@@ -1,8 +1,76 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %} 
-<div class="roboczy">
-    <h2>Dodatkowy kontent</h2>
+<div class="head-section">
+  <img class="profile-picture" src="{% static 'szymon.jpg' %}">
+  <div class="main-description">
+    <div class="name-surname">Szymon Wais</div>
+    <div class="role-description">Aspiring Developer</div>
+  </div>
 </div>
+<section class="container text-center">
+  <div class="row">
+    <div class="col">
+      <a href="/static/media/Szymon_Wais_CV.pdf" download>Download</a>
+    </div>
+    <div class="col">
+      Something
+    </div>
+    <div class="col">
+      Something
+    </div>
+    <div class="col">
+      Something
+    </div>
+  </div>
+
+</section>
+
+
+<section class="container text-center">
+    <div class="row about-me">
+      <div class="col">
+        <div class="about-me-section-name">Experience</div>
+        <div class="about-me-description">
+          <ul>
+            <li>Python</li>
+            <li>Django</li>
+            <li>Docker-Compose</li>
+            <li>Celery</li>
+            <li>JS, HTML&CSS, GIT, SQL, Celery+Redis</li>
+            <li>DockerCompose, PuTTY+AWS, NGINX+Gunicorn</li>
+            <li>ECDL EPP GIS, strong geodesy, GIS, env. mgmt.</li>
+            <li>Independent and group work, problem solving</li>
+            <li>Resilience & blue-sky thinking</li>
+          </ul>
+
+        </div>
+
+      </div>
+      <div class="col">
+        <div class="about-me-section-name">Languages</div>
+        <div class="about-me-description">
+          <ul>
+            <li>Croatian - Pre-Intermediate</li>
+            <li>Russian - Pre-Intermediate</li>
+            <li>English - Advanced</li>
+            <li>Polish - Native</li>
+          </ul>
+
+        </div>
+        
+      </div>
+      <div class="col">
+        <div class="about-me-section-name">Main projects</div>
+        <div class="about-me-description">
+          <ul>
+            <li>WeatherApp --> AWS Cloud service</li>
+            <li>Drawing on screen (Tkinter)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
 
 {% endblock content %}

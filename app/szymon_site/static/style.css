@@ -6,3 +6,49 @@ h1 {
     color: grey;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
+body {
+    background-color: rgb(51, 51, 51);
+    color: rgb(207, 191, 191);
+    margin: 30px;
+}
+
+.profile-picture {
+    width: 300px;
+    height: auto;
+    border-radius: 50%;
+}
+
+.head-section {
+    display: flex;   
+}
+
+.name-surname {
+    font-size: 45px;
+    font-style: italic;
+    position: relative;
+    top: 50px;
+
+}
+
+.role-description {
+    font-size: 30px;
+    position: relative;
+}
+
+
+.main-description {
+    
+    font-family: sans-serif;
+    left: 60px;
+    display: grid;
+    position: relative;
+}
+
+.about-me {
+    padding-top: 100px;
+}
+
+.about-me-description ul{
+    list-style-type: circle;
+}
