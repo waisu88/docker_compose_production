@@ -3,13 +3,14 @@ from rest_framework.response import Response
 from rest_framework import generics
 from .models import SynopticData
 from .serializers import SynopticDataSerializer
+from rest_framework.reverse import reverse
 # Create your views here.
 
 
 @api_view(['GET'])
 def api_overview(request):
     routes = {
-            'List': '/weather/data-list/',
+            'List': request.build_absolute_uri(reverse(('synoptic_data_list'))),
             'Single station': '/weather/single-station/',
             'By-hour': '/weather/by-given-hour/',
     }
