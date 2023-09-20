@@ -22,7 +22,8 @@ body {
 
 .name-surname {
     font-size: 45px;
-    font-style: italic;
+    font-style: normal;
+    font-weight: bolder;
     position: relative;
     top: 50px;
     padding-bottom: 10px;
@@ -50,7 +51,7 @@ body {
 }
 
 .list-abilities {
-    line-height: 45px;
+    line-height: 38px;
     font-size: 16px;
 }
 
