@@ -50,12 +50,16 @@ INSTALLED_APPS = [
     'django_celery_results',
     'django_celery_beat',
     'django_filters',
+    'easy_thumbnails',
+    'django_cleanup.apps.CleanupConfig',
 
+    'authorization',
     'core',
     'api',
     'weatherapp',
     'szymon_site',
     'uczniowie',
+    'images',
 
 ]
 

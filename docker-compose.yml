@@ -37,7 +37,7 @@ services:
     build: 
       context: .
     command: >
-      sh -c "celery -A app.celery worker --pool=solo -l info"
+      sh -c "celery -A app.celery worker --loglevel=info --concurrency 1 -E"
     environment:
       - CELERY_BROKER_URL=redis://redis:6379/0
       - CELERY_RESULT_BACKEND=redis://redis:6379/0

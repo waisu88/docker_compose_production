@@ -25,6 +25,8 @@ urlpatterns = [
     path('api/', include('api.urls')),
     path('', include('szymon_site.urls')),
     path('uczniowie/', include('uczniowie.urls')),
+    path('auth/', include('authorization.urls')),
+    path('images/', include('images.urls')),
 ]
 
 if settings.DEBUG:
