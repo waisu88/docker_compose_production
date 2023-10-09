@@ -4,6 +4,7 @@ from rest_framework import generics
 from .models import SynopticData
 from .serializers import SynopticDataSerializer
 from rest_framework.reverse import reverse
+
 # Create your views here.
 from django_filters.rest_framework import DjangoFilterBackend
 

@@ -11,8 +11,8 @@ class AuthAPIOverview(APIView):
 
     def get(self, request):
         routes = {
-            "Login": request.build_absolute_uri(reverse(('list-create-image'))),
-            "Logout": request.build_absolute_uri(reverse(('thumbnail-list'))),
+            "Login": request.build_absolute_uri(reverse(('login'))),
+            "Logout": request.build_absolute_uri(reverse(('logout'))),
         }
         return Response(routes)
 

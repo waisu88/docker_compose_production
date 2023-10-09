@@ -27,7 +27,7 @@ app.conf.beat_schedule = {
     },
     'stworz_kombinacje_par_co_tydzien_w_poniedzialek': {
         'task': 'uczniowie.tasks.kombinacja_par',
-        'schedule': crontab(hour=2, minute=30, day_of_week=1),
+        'schedule': timedelta(seconds=30),  #crontab(hour=2, minute=30, day_of_week=1)
     }
 }
 
