@@ -20,6 +20,7 @@ class ImagesApiOverview(APIView):
 
     def get(self, request):
         routes = {
+            "For LOGIN visit -->": request.build_absolute_uri(reverse(('authorization'))),
             "List-Create images": request.build_absolute_uri(reverse(('list-create-image'))),
             "Thumbnail list": request.build_absolute_uri(reverse(('thumbnail-list'))),
             "Below": "<int:pk> --> image id",
