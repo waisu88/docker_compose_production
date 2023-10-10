@@ -8,6 +8,8 @@ from rest_framework.authtoken.models import Token
 from authorization.serializers import LoginSerializer
 import datetime
 
+
+
 # class RegistationTestCase(APITestCase):
 
 #     def test_registration(self):
@@ -49,7 +51,14 @@ class LoginAPIViewTestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_create_image(self):
-        # self.client.force_authenticate(user=self.user)
-        # data = {"image":"image.png", "uploaded_by":self.user}
         object = Image.objects.get(id=1)
         self.assertIsInstance(object, Image)
+
+
+class ImageAPIViewTestCase(APITestCase):
+
+    images_urls = reverse("list-create-image")
+
+    def setUp(self):
+        pass
+

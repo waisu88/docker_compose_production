@@ -12,6 +12,7 @@ COPY /scripts /scripts
 WORKDIR /app
 EXPOSE 8000
 
+
 RUN python -m venv /py && \
     /py/bin/pip install --upgrade pip && \
     apk add linux-headers && \

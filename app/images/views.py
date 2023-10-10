@@ -52,11 +52,15 @@ class ImageListCreateAPIView(generics.ListCreateAPIView):
         self.create_thumbnails(user) 
 
     def create_thumbnails(self, user):
+        print(user)
         base_image = Image.objects.filter(uploaded_by=user).last()
+        print(base_image)
         granted_tiers = GrantedTier.objects.filter(user=user)
         account_tiers = [tier.account_tier for tier in granted_tiers]
+        print(account_tiers)
         thumbnail_sizes = ThumbnailGrantedPrivileges.objects.filter(account_tier__in=account_tiers)
         available_thumbnail_sizes = []
+        print(available_thumbnail_sizes)
         for granted_size in thumbnail_sizes:
             available_thumbnail_sizes.append(granted_size.thumbnail_size.size)
         for th_size in available_thumbnail_sizes:
