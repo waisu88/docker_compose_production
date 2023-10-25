@@ -13,6 +13,8 @@ services:
     volumes:
       - ./app:/app
       - ./data/web:/vol/web
+    env_file:
+      - .env
     environment:
       - SECRET_KEY=devsecretkey
       - DEBUG=1
@@ -22,6 +24,10 @@ services:
       - DB_PASS=changeme
       - CELERY_BROKER_URL=redis://redis:6379/0
       - CELERY_RESULT_BACKEND=redis://redis:6379/0
+      # - EMAIL_HOST=smtp.gmail.com
+      # - EMAIL_HOST_USER=szymon.wais2@gmail.com
+      # - EMAIL_HOST_PASSWORD=wmzupxtwkqkmtpeh
+      # - EMAIL_PORT=587
     depends_on:
       - db
 

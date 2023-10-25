@@ -27,6 +27,7 @@ urlpatterns = [
     path('uczniowie/', include('uczniowie.urls')),
     path('auth/', include('authorization.urls')),
     path('images/', include('images.urls')),
+    path('reminder/', include('reminder.urls')),
 ]
 
 if settings.DEBUG:
