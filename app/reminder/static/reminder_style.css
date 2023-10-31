@@ -1,0 +1,79 @@
+html {
+  height: 100%;  
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh; /* Set the body height to cover the entire viewport */
+  background: linear-gradient(to right, #121212, #8b3030);
+  background-attachment: fixed; /* Keeps the background fixed when scrolling */
+  color: lightgrey;
+}
+
+.container {
+  margin-top: 50px;
+  display: flex;
+    /* justify-content: space-between; */
+    
+  }
+
+.form-container {
+  display: grid;
+}
+ 
+a {
+  text-decoration: none; /* Remove underlines */
+  color: inherit; /* Inherit the color from its parent element (e.g., black by default) */
+  background: linear-gradient(to bottom, #121212, #8b3030); /* Adjust colors as needed */
+}
+
+
+#id_message {
+  width: 300px;
+  height: 200px; 
+  white-space: normal; 
+  overflow: auto;
+  background: lightgrey;
+}
+
+.form-textarea-date-button {
+  background: lightgrey;
+}
+
+.message-list {
+ /* This column will take up the available space */
+    margin-right: 20px; /* Add spacing between columns */
+    position: relative;
+    font-weight: bolder;
+  }
+  
+  .create-message {
+
+    position: relative; /* This column will take up the available space */
+  }
+
+
+  .message-items {
+    list-style: none;
+    padding: 0;
+  }
+
+  .message-item {
+    display: inline-block;
+    width: 240px; /* Set the desired width for the square */
+    height: 240px; /* Set the same height to make it a square */
+    background: linear-gradient(to bottom right, #121212, #3a1414, #8b3030);
+    margin-right: 5px; /* Add spacing between square items */
+    text-align: center;
+    line-height: 100px; /* Vertically center text */
+    background-color: lightgrey;
+    border-radius: 5%;
+    border-color: black;
+    border-style: dotted;
+    border-width: 2px;
+    margin-bottom: 20px;
+  }
+
+  
+  /* Add additional CSS to style your elements as needed */

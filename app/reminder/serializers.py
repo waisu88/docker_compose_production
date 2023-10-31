@@ -5,11 +5,14 @@ import pytz
 from django.contrib.auth.models import User
 
 
+
 class RemindingMessagesSerializer(serializers.ModelSerializer):
+    send_mail_at = serializers.DateTimeField()
 
     class Meta:
         model = RemindingMessage
         fields = "__all__"
+        render_form = True
 
 
     def validate(self, data):

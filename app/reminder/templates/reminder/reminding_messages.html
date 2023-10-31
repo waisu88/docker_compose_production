@@ -1,0 +1,43 @@
+{% extends 'reminder_base.html' %}
+{% load static %}
+
+
+
+{% block content %}
+<div class="container">
+    <div class="col-8 message-list">
+        <h1 style="padding-bottom: 20px;">Twoje zapisane przypominajki</h1>
+        <ul class="message-items">
+            {% for message in messages %}
+                <li class="message-item">
+                    <a href="{% url 'message-details' message.id %}">
+                    <div class="message-text">
+                        {{ message.message }}  <br> 
+                        {{ message.send_mail_at|date:"Y-m-d H:i" }}
+                    </div>
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="col-4 create-message">
+    
+        <h1>Utwórz nową przypominajkę</h1>
+        <!-- HTML Form for Creating Messages -->
+            <form method="post" class="form-container">
+                {% csrf_token %}
+
+                <label for="id_message">Wpisz, o czym mam Ci przypomnieć:</label>
+                <!-- <input type="text" id="id_message" name="message" required><br> -->
+                <textarea id="id_message" name="message" class="form-textarea-date-button" required></textarea><br>
+
+                <label for="id_send_mail_at">Wybierz, kiedy mam Ci wysłać e-mail z tą wiadomością:</label>
+                <input type="datetime-local" id="id_send_mail_at" name="send_mail_at" class="form-textarea-date-button" required><br>
+
+                <button type="submit" class="form-textarea-date-button">Stwórz przypominajkę</button>
+            </form>
+    </div>
+</div>
+{% endblock content %}
+
+

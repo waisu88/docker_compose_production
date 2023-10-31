@@ -81,6 +81,7 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             'szymon_site/templates/szymon_site',
+            'reminder/templates/reminder',
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -115,7 +116,6 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 50,
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
 }
-
 
 
 
