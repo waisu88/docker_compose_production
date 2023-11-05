@@ -14,25 +14,22 @@ from .forms import MessageForm
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views import View
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
-# Create your views here.
-class RemindingMessagesListAPIView(generics.ListAPIView):
-    renderer_classes = [TemplateHTMLRenderer]
-    queryset = RemindingMessage.objects.all()
-    serializer_class = RemindingMessagesSerializer
-    template_name = 'reminding_messages.html'
-    # def get(self, request):
-    #     messages = RemindingMessage.objects.all()
-    #     return Response({'messages': messages}, template_name='reminding_messages.html')
+
 
 class RemindingMessagesListCreateAPIView(generics.ListCreateAPIView, View):
     queryset = RemindingMessage.objects.all()
     serializer_class = RemindingMessagesSerializer
     form = MessageForm()
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get(self, request):
-        # form = MessageForm()
-        return render(request, 'reminding_messages.html', {'form': self.form, 'messages': self.get_queryset()})
+        user = self.request.user
+        if user:
+            user_messages = RemindingMessage.objects.filter(user=user.id)
+            return render(request, 'reminding_messages.html', {'form': self.form, 'messages': user_messages})
+        return render(request, 'reminding_messages.html', {'form': self.form, 'messages': None})
 
     def post(self, request):
         
@@ -40,7 +37,7 @@ class RemindingMessagesListCreateAPIView(generics.ListCreateAPIView, View):
             # API request, use serializer
             data = request.data.copy()
             data['user'] = request.user.id
-            print(data['user'])
+
             serializer = self.get_serializer(data=data)
             if serializer.is_valid():
                 serializer.save()
@@ -48,7 +45,6 @@ class RemindingMessagesListCreateAPIView(generics.ListCreateAPIView, View):
                 send_mail_at = serializer.data['send_mail_at']
                 send_reminding_email.apply_async(args=[message_id], kwargs=None, eta=send_mail_at)
                 return render(request, 'reminding_messages.html', {'form': self.form, 'messages': self.get_queryset()})
-                # return Response({'success': True}, status=status.HTTP_201_CREATED)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         else:
             # HTML form request

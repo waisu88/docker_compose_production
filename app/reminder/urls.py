@@ -1,8 +1,8 @@
 from django.urls import path
-from . import views
+from .views import RemindingMessagesListCreateAPIView, RemindingMessageDetailAPIView
 
 
 urlpatterns = [
-    path('', views.RemindingMessagesListCreateAPIView.as_view(), name='reminding-messages-list'),
-    path('<int:pk>/', views.RemindingMessageDetailAPIView.as_view(), name='message-details'),
+    path('', RemindingMessagesListCreateAPIView.as_view(), name='reminding-messages-list'),
+    path('<int:pk>/', RemindingMessageDetailAPIView.as_view(), name='message-details'),
 ]

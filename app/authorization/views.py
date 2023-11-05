@@ -3,8 +3,9 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from django.contrib.auth.models import User
-from .serializers import LoginSerializer
+from .serializers import LoginSerializer, UserSerializer
 # Create your views here.
+from rest_framework import status
 
 
 class AuthAPIOverview(APIView):
@@ -13,6 +14,7 @@ class AuthAPIOverview(APIView):
         routes = {
             "Login": request.build_absolute_uri(reverse(('login'))),
             "Logout": request.build_absolute_uri(reverse(('logout'))),
+            "Register": request.build_absolute_uri(reverse(('register'))),
         }
         return Response(routes)
 
@@ -49,3 +51,17 @@ class LogoutAPIView(APIView):
     def get(self, request):
         logout(request)
         return Response({"message": "Successfully logouted."})
+    
+
+class RegisterAPIView(APIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+    def post(self, request):
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            user = User.objects.get(username=serializer.validated_data['username'])
+            login(request, user)
+            return Response({"message": "Registration successful.", "user_id": user.id}, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

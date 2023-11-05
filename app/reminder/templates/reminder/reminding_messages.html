@@ -12,7 +12,10 @@
                 <li class="message-item">
                     <a href="{% url 'message-details' message.id %}">
                     <div class="message-text">
-                        {{ message.message }}  <br> 
+                        {{ message.message|truncatewords:10 }}
+                        <br>
+                        <hr>
+                        <br>Wiadomość zostanie wysłana: <br>  
                         {{ message.send_mail_at|date:"Y-m-d H:i" }}
                     </div>
                     </a>

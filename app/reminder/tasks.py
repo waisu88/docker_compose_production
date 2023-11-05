@@ -7,6 +7,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from .models import RemindingMessage
 from datetime import timedelta
+from django.utils import timezone
 
 @shared_task(bind=True)
 def send_reminding_email(*args, **kwargs):
@@ -16,6 +17,8 @@ def send_reminding_email(*args, **kwargs):
     user_email = reminding_message.user.email
     message = reminding_message.message
     created_at = reminding_message.created_at
+    
+    local_created_at = created_at.astimezone(timezone.get_current_timezone())
 
     smtp_server = os.environ.get("EMAIL_HOST")
     sender_email = os.environ.get("EMAIL_HOST_USER")
@@ -25,7 +28,7 @@ def send_reminding_email(*args, **kwargs):
     msg = MIMEMultipart("alternative")
     mime_message = MIMEText(message, "plain")
     msg.attach(mime_message)
-    msg["Subject"] = f"Reminding message from {(created_at + timedelta(hours=2)):%H:%M in %A %d.%m.%Yy}"
+    msg["Subject"] = f"Przypominajka z {local_created_at:%H:%M dnia %A %d.%m.%Yy}"
     # Create the SSLContext object
     context = ssl.create_default_context()
     # Use smtplib.SMTP() class
