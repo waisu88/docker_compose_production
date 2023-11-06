@@ -2,7 +2,13 @@ name: Deploy
 
 on:
   push:
-    branches: ["main"]
+    branches: 
+      - "main"
+
+env:
+  PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+  HOSTNAME: ${{ secrets.HOST_NAME }}
+  USER_NAME: ${{ secrets.USER_NAME }}
 
 jobs:
   Deploy:
@@ -12,14 +18,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build & Deploy
-        env:
-          PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          HOSTNAME: ${{ secrets.HOST_NAME }}
-          USER_NAME: ${{ secrets.USER_NAME }}
+        
         
         run: |
-          echo "$PRIVATE_KEY" > private_key.pem && chmod 600 private_key.pem
-          ssh -o StrictHostKeyChecking=no -i private_key.pem ${USER_NAME}@${HOSTNAME} '
+          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+          ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
 
           cd docker_compose_production &&
           git pull origin &&
