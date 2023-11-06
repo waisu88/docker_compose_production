@@ -1,0 +1,27 @@
+name: Deploy
+
+  on:
+    push:
+      branches: ["main"]
+  
+  jobs:
+    Deploy:
+      name: Deploy to EC2
+      runs-on: Amazon Linux (Inferred)
+
+      steps:
+        - uses: actions/checkout@v2
+        - name: Build & Deploy
+          env:
+            PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+            HOSTNAME: ${{ secrets.HOST_NAME }}
+            USER_NAME: ${{ secrets.USER_NAME }}
+          
+          run:
+            echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+            ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
+
+            cd docker_compose_production &&
+            git pull origin &&
+            docker compose -f docker-compose-deploy.yml build app celery celery-beat &&
+            docker compose -f docker-compose-deploy.yml up --no-deps -d app celery celery-beat
