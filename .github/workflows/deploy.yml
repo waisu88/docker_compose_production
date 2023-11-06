@@ -19,9 +19,10 @@ jobs:
         
         run:
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-          ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME}
+          ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
 
           cd docker_compose_production &&
           git pull origin &&
           docker compose -f docker-compose-deploy.yml build app celery celery-beat &&
           docker compose -f docker-compose-deploy.yml up --no-deps -d app celery celery-beat
+          '
