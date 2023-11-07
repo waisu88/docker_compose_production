@@ -21,15 +21,7 @@ jobs:
       - name: Login to AWS ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
-      # - name: Build, push docker image
-      #   env:
-      #     REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-      #     REPOSITORY: docker_compose_production
-      #     IMAGE_TAG: ${{ github.sha }}
-      #   run: |-
-      #     docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
-      #     docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
-      - name: Deploy docker image to EC2
+      - name: Deploy to EC2 create docker app up container
         env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           REPOSITORY: docker_compose_production
@@ -41,13 +33,8 @@ jobs:
           username: ec2-user
           key: ${{ secrets.AWS_SSH_KEY }}
           script: |
-            whoami
-            # echo "$key" > private_key
-            # chmod 600 private_key
-            # ssh -v -o StrictHostKeyChecking=no -i private_key ${username}@${host} '
-  
             cd docker_compose_production
             git pull origin &&
             docker compose -f docker-compose-deploy.yml build app &&
             docker compose -f docker-compose-deploy.yml up --no-deps -d app
-            # '
+
