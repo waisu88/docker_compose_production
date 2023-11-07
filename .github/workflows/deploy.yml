@@ -41,7 +41,10 @@ jobs:
           username: ${{ secrets.AWS_ACCESS_KEY }}
           key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           script: |
-            '
+            echo "$key" > private_key
+            chmod 600 private_key
+            ssh -v -o StrictHostKeyChecking=no -i private_key ${username}@${host} '
+  
             cd docker_compose_production &&
             git pull origin &&
             docker compose -f docker-compose-deploy.yml build app celery celery-beat &&
