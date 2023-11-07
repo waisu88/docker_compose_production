@@ -42,24 +42,12 @@ jobs:
           key: ${{ env.PRIVATE_SSH_KEY }}
           envs: PRIVATE_SSH_KEY,REGISTRY,REPOSITORY,IMAGE_TAG,AWS_ACCESS_KEY_ID,AWS_SECRET_ACCESS_KEY,AWS_DEFAULT_REGION,AWS_REGION
           script: |-
-            sudo apt update
-            sudo apt install docker.io -y
-            sudo apt install awscli -y
-            sudo $(aws ecr get-login --no-include-email --region ap-south-1);
-            sudo docker stop myappcontainer || true
-            sudo docker rm myappcontainer || true
-            sudo docker pull $REGISTRY/$REPOSITORY:$IMAGE_TAG
-            sudo docker run -d --name myappcontainer -p 80:80 $REGISTRY/$REPOSITORY:$IMAGE_TAG
-          
-          
-          
-          
-          # script: |-
-          #   echo "${{ env.PRIVATE_SSH_KEY }}" > private_key && chmod 600 private_key
-          #   ssh -v -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
+            cat "${{ env.PRIVATE_SSH_KEY }}" >> authorized_key
+            echo authorized_key > private_key && chmod 600 private_key
+            ssh -v -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
 
-          #   cd docker_compose_production &&
-          #   git pull origin &&
-          #   docker compose -f docker-compose-deploy.yml build app celery celery-beat &&
-          #   docker compose -f docker-compose-deploy.yml up --no-deps -d app celery celery-beat
-          #   '
+            cd docker_compose_production &&
+            git pull origin &&
+            docker compose -f docker-compose-deploy.yml build app celery celery-beat &&
+            docker compose -f docker-compose-deploy.yml up --no-deps -d app celery celery-beat
+            '
