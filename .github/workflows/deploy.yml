@@ -35,7 +35,7 @@ jobs:
           REPOSITORY: docker_compose_production
           IMAGE_TAG: ${{ github.sha }}
           AWS_DEFAULT_REGION: eu-central-1
-        uses: appleboy/ssh-action@master
+        uses: appleboy/ssh-action@v1.0.0
         with:
           host: 3.76.103.42
           username: ec2-user
