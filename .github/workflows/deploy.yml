@@ -39,7 +39,7 @@ jobs:
         with:
           host: ${{ secrets.AWS_PUBLIC_KEY }}
           username: ec2-user
-          key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          key: ${{ secrets.AWS_SSH_KEY }}
           script: whoami
             # echo "$key" > private_key
             # chmod 600 private_key
