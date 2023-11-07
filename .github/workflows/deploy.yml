@@ -43,8 +43,8 @@ jobs:
           envs: PRIVATE_SSH_KEY,REGISTRY,REPOSITORY,IMAGE_TAG,AWS_ACCESS_KEY_ID,AWS_SECRET_ACCESS_KEY,AWS_DEFAULT_REGION,AWS_REGION
           script: |-
 
-            echo "${key}" > private_key && chmod 600 private_key
-            ssh -v -o StrictHostKeyChecking=no -i private_key ${username}@${host} '
+            echo "${{ env.PRIVATE_SSH_KEY }}" > private_key && chmod 600 private_key
+            ssh -v -o StrictHostKeyChecking=no -i private_key ec2-user@3.76.103.42 '
 
             cd docker_compose_production &&
             git pull origin &&
