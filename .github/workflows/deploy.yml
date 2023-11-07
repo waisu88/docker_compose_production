@@ -38,13 +38,13 @@ jobs:
         uses: appleboy/ssh-action@master
         with:
           host: ${{ env.SERVER_PUBLIC_IP }}
-          username: ubuntu
+          username: ec2-user@3.76.103.42
           key: ${{ env.PRIVATE_SSH_KEY }}
           envs: PRIVATE_SSH_KEY,REGISTRY,REPOSITORY,IMAGE_TAG,AWS_ACCESS_KEY_ID,AWS_SECRET_ACCESS_KEY,AWS_DEFAULT_REGION,AWS_REGION
           script: |-
-            cat "${{ env.PRIVATE_SSH_KEY }}" >> authorized_key
-            echo authorized_key > private_key && chmod 600 private_key
-            ssh -v -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
+
+            echo "${key}" > private_key && chmod 600 private_key
+            ssh -v -o StrictHostKeyChecking=no -i private_key ${username}@${host} '
 
             cd docker_compose_production &&
             git pull origin &&
