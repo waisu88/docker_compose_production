@@ -1,4 +1,4 @@
-name: Deploy
+name: Deploy to AWS
 
 on:
   push:
@@ -6,26 +6,39 @@ on:
       - "main"
 
 env:
-  PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-  HOSTNAME: ${{ secrets.HOST_NAME }}
-  USER_NAME: ${{ secrets.USER_NAME }}
+  AWS_REGION: eu-central-1
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  PRIVATE_SSH_KEY: ${{ secrets.AWS_SSH_KEY }}
+  SERVER_PUBLIC_IP: ${{ secrets.AWS_PUBLIC_KEY }}
 
 jobs:
-  Deploy:
-    name: Deploy to EC2
+  deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v2
-      - name: Build & Deploy
-        
-        
-        run: |
-          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-          ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Login to AWS ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+      - name: Deploy docker image to EC2
+        env:
+          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          REPOSITORY: docker_compose_production
+          IMAGE_TAG: ${{ github.sha }}
+          AWS_DEFAULT_REGION: eu-central-1
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ env.SERVER_PUBLIC_IP }}
+          username: ubuntu
+          key: ${{ env.PRIVATE_SSH_KEY }}
+          envs: PRIVATE_SSH_KEY,REGISTRY,REPOSITORY,IMAGE_TAG,AWS_ACCESS_KEY_ID,AWS_SECRET_ACCESS_KEY,AWS_DEFAULT_REGION,AWS_REGION
+          script: |-
+            echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+            ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
 
-          cd docker_compose_production &&
-          git pull origin &&
-          docker compose -f docker-compose-deploy.yml build app celery celery-beat &&
-          docker compose -f docker-compose-deploy.yml up --no-deps -d app celery celery-beat
-          '
+            cd docker_compose_production &&
+            git pull origin &&
+            docker compose -f docker-compose-deploy.yml build app celery celery-beat &&
+            docker compose -f docker-compose-deploy.yml up --no-deps -d app celery celery-beat
+            '
