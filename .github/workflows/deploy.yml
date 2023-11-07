@@ -34,11 +34,8 @@ jobs:
           key: ${{ env.PRIVATE_SSH_KEY }}
           envs: PRIVATE_SSH_KEY,REGISTRY,REPOSITORY,IMAGE_TAG,AWS_ACCESS_KEY_ID,AWS_SECRET_ACCESS_KEY,AWS_DEFAULT_REGION,AWS_REGION
           script: |-
-            echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-            ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
-
             cd docker_compose_production &&
             git pull origin &&
             docker compose -f docker-compose-deploy.yml build app celery celery-beat &&
             docker compose -f docker-compose-deploy.yml up --no-deps -d app celery celery-beat
-            '
+            
