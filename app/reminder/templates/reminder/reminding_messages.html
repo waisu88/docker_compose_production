@@ -7,7 +7,12 @@
 <div class="container">
     <div class="col-8 message-list">
         <h1 style="padding-bottom: 20px;">Twoje zapisane przypominajki</h1>
+        {% if login_page_url %}
+        Zaloguj się, by móc utworzyć przypominajki: <br>
+        <a href="{{ login_page_url }}">Login</a>
+        {% endif %}
         <ul class="message-items">
+            
             {% for message in messages %}
                 <li class="message-item">
                     <a href="{% url 'message-details' message.id %}">

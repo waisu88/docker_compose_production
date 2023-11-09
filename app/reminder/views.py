@@ -17,7 +17,6 @@ from django.views import View
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 
-
 class RemindingMessagesListCreateAPIView(generics.ListCreateAPIView, View):
     queryset = RemindingMessage.objects.all()
     serializer_class = RemindingMessagesSerializer
@@ -26,10 +25,11 @@ class RemindingMessagesListCreateAPIView(generics.ListCreateAPIView, View):
 
     def get(self, request):
         user = self.request.user
-        if user:
+        if user.is_authenticated:
             user_messages = RemindingMessage.objects.filter(user=user.id)
             return render(request, 'reminding_messages.html', {'form': self.form, 'messages': user_messages})
-        return render(request, 'reminding_messages.html', {'form': self.form, 'messages': None})
+        login_page_url = request.build_absolute_uri(reverse(('authorization')))
+        return render(request, 'reminding_messages.html', {'form': self.form, 'messages': None, 'login_page_url': login_page_url})
 
     def post(self, request):
         
