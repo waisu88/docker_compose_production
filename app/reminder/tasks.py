@@ -11,23 +11,23 @@ from django.utils import timezone
 
 @shared_task(bind=True)
 def send_reminding_email(*args, **kwargs):
-    message_id = args[1]
-
+    # get neccessary variables from kwargs
+    message_id = kwargs['message_id']
+    smtp_server = kwargs['smtp_server']
+    sender_email = kwargs['sender_email']
+    password = kwargs['password']
+    email_port = kwargs['email_port']
+    # get instance of the message
     reminding_message = RemindingMessage.objects.get(id=message_id)
     user_email = reminding_message.user.email
     message = reminding_message.message
     created_at = reminding_message.created_at
-    
-    local_created_at = created_at.astimezone(timezone.get_current_timezone())
-
-    smtp_server = os.environ.get("EMAIL_HOST")
-    sender_email = os.environ.get("EMAIL_HOST_USER")
-    password = os.environ.get("EMAIL_HOST_PASSWORD")
-    email_port = os.environ.get("EMAIL_PORT")
-
+    # to avoid encoding issues
     msg = MIMEMultipart("alternative")
     mime_message = MIMEText(message, "plain")
     msg.attach(mime_message)
+    # read local datetime
+    local_created_at = created_at.astimezone(timezone.get_current_timezone())
     msg["Subject"] = f"Przypominajka z {local_created_at:%H:%M dnia %A %d.%m.%Yy}"
     # Create the SSLContext object
     context = ssl.create_default_context()
@@ -42,4 +42,5 @@ def send_reminding_email(*args, **kwargs):
             msg.as_string()
         )
         server.quit()
+    # clear unnecessary message
     RemindingMessage.objects.get(id=message_id).delete()

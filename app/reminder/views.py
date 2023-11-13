@@ -43,7 +43,15 @@ class RemindingMessagesListCreateAPIView(generics.ListCreateAPIView, View):
                 serializer.save()
                 message_id = serializer.data["id"]
                 send_mail_at = serializer.data['send_mail_at']
-                send_reminding_email.apply_async(args=[message_id], kwargs=None, eta=send_mail_at)
+       
+                params = {
+                    'message_id': message_id, 
+                    'smtp_server': os.environ.get("EMAIL_HOST"), 
+                    'sender_email': os.environ.get("EMAIL_HOST_USER"), 
+                    'password': os.environ.get("EMAIL_HOST_PASSWORD"), 
+                    'email_port': os.environ.get("EMAIL_PORT")
+                    }
+                send_reminding_email.apply_async(args=[], kwargs=params, eta=send_mail_at)
                 return render(request, 'reminding_messages.html', {'form': self.form, 'messages': self.get_queryset()})
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         else:
