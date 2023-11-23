@@ -40,6 +40,8 @@ services:
       context: .
     command: >
       sh -c "celery -A app.celery worker --loglevel=info --concurrency 1 -E"
+    volumes:
+      - ./data/web:/vol/web
     env_file:
       - .env
     environment:

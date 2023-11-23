@@ -7,8 +7,6 @@ services:
     restart: always
     volumes: 
       - static-data:/vol/web
-    # env_file:
-    #   - .env
     environment:
       - DB_HOST=db
       - DB_NAME=${DB_NAME}
@@ -53,6 +51,8 @@ services:
       context: .
     command: >
       sh -c "celery -A app.celery worker --pool=solo -l info"
+    volumes:
+      - static-data:/vol/web
     environment:
       - CELERY_BROKER_URL=redis://redis:6379/0
       - CELERY_RESULT_BACKEND=redis://redis:6379/0

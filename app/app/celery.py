@@ -25,6 +25,10 @@ app.conf.beat_schedule = {
         'task': 'weatherapp.tasks.get_api_data',
         'schedule': timedelta(minutes=30),
     },
+    # 'delete_expiring_links_instances': {
+    #     'task': 'images_api.tasks.delete_expiring_links_instances',
+    #     'schedule': timedelta(minutes=1),
+    # },
     # 'stworz_kombinacje_par_co_tydzien_w_poniedzialek': {
     #     'task': 'uczniowie.tasks.kombinacja_par',
     #     'schedule': crontab(hour=2, minute=30, day_of_week=1),
