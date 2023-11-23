@@ -24,7 +24,7 @@ def delete_expiring_link_image(sender, instance, **kwargs):
     """
     Signal handler to delete associated image file when an Image instance is deleted.
     """
-    instance.image.delete() 
+    instance.image.delete(False) 
 
 
 class Thumbnail(models.Model):
@@ -45,7 +45,7 @@ def delete_expiring_link_image(sender, instance, **kwargs):
     """
     Signal handler to delete associated thumbnail image file when a Thumbnail instance is deleted.
     """
-    instance.thumbnail_image.delete() 
+    instance.thumbnail_image.delete(False) 
 
 
 class ThumbnailSize(models.Model):
@@ -105,5 +105,5 @@ def delete_expiring_link_image(sender, instance, **kwargs):
     """
     Signal handler to delete associated expiring link image file when an ExpiringLink instance is deleted.
     """
-    instance.expiring_image.delete()
+    instance.expiring_image.delete(False)
 
