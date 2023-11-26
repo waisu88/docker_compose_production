@@ -36,5 +36,6 @@ jobs:
             cd docker_compose_production
             git pull origin &&
             docker compose -f docker-compose-deploy.yml build app celery celery-beat proxy &&
+            docker compose -f docker-compose-deploy.yml stop app celery celery-beat proxy &&
             docker compose -f docker-compose-deploy.yml up --no-deps -d app celery celery-beat proxy
 

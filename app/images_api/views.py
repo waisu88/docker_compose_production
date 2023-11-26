@@ -8,6 +8,29 @@ from django.core.cache import cache
 from .tasks import create_thumbnails, delete_expiring_link
 from django.core.files.base import ContentFile
 from django.http import Http404
+from django.urls import reverse
+from rest_framework.views import APIView
+
+
+class ImagesApiOverview(APIView):
+    """
+    Provides an overview of image-related routes.
+
+    Routes:
+    - 'For LOGIN visit -->': Authentication endpoint.
+    - 'List-Create images': List and create images.
+    - 'Image detail': View details of a specific image (use its slug).
+    - 'Expiring link': Generate an expiring link for a specific image.
+    """
+
+    def get(self, request):
+        routes = {
+            "For LOGIN visit -->": request.build_absolute_uri(reverse(('authorization'))),
+            "List-Create images": request.build_absolute_uri(reverse(('list-create-images'))),
+            "Image detail": request.build_absolute_uri(reverse(('list-create-images'))) + "<slug:slug>",
+            "Expiring link": request.build_absolute_uri(reverse(('list-create-images'))) + "<slug:slug>/expiring",
+        }
+        return Response(routes)
 
 
 class ImageListCreateAPIView(generics.ListCreateAPIView):
@@ -21,6 +44,7 @@ class ImageListCreateAPIView(generics.ListCreateAPIView):
     """
     serializer_class = ImageSerializer
     permission_classes = [permissions.IsAuthenticated]
+
 
     def get_queryset(self, *args, **kwargs):
         """

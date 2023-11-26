@@ -9,18 +9,31 @@ def create_thumbnails(user_id):
     Celery task to create thumbnails for the last uploaded image of an user based on their granted tiers.
     """
     base_image = Image.objects.filter(uploaded_by__id=user_id).last()
-    user_tiers = GrantedTier.objects.filter(user__id=user_id)[0]
-    sizes = []
+    user_tiers = GrantedTier.objects.filter(user__id=user_id).first()
+
+    sizes = set()
     for tier in user_tiers.granted_tiers.all():
-        for thumbnail_size in tier.thumbnail_sizes.all():
-            th_size = (thumbnail_size.width, thumbnail_size.height)
-            if th_size not in sizes:
-                sizes.append(th_size)
+        sizes.update((thumbnail_size.width, thumbnail_size.height) for thumbnail_size in tier.thumbnail_sizes.all())
+
     for size in sizes:
         thumbnailer = get_thumbnailer(base_image.image)
         th = thumbnailer.get_thumbnail({'size': size, 'crop': True})
         thumbnail_size = f"{size[0]}x{size[1]}px"
-        Thumbnail.objects.create(created_by_id=user_id, base_image=base_image, thumbnail_image=str(th), thumbnail_size=thumbnail_size)          
+        Thumbnail.objects.create(created_by_id=user_id, base_image=base_image, thumbnail_image=str(th), thumbnail_size=thumbnail_size)
+
+
+
+    # sizes = []
+    # for tier in user_tiers.granted_tiers.all():
+    #     for thumbnail_size in tier.thumbnail_sizes.all():
+    #         th_size = (thumbnail_size.width, thumbnail_size.height)
+    #         if th_size not in sizes:
+    #             sizes.append(th_size)
+    # for size in sizes:
+    #     thumbnailer = get_thumbnailer(base_image.image)
+    #     th = thumbnailer.get_thumbnail({'size': size, 'crop': True})
+    #     thumbnail_size = f"{size[0]}x{size[1]}px"
+    #     Thumbnail.objects.create(created_by_id=user_id, base_image=base_image, thumbnail_image=str(th), thumbnail_size=thumbnail_size)          
 
 
 @shared_task()

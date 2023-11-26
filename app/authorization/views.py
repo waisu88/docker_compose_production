@@ -33,7 +33,7 @@ class LoginAPIView(APIView):
             if user is not None:
                 if request.user != user:
                     logout(request)
-                redirect_message = f"You can now redirect to images service: {request.build_absolute_uri(reverse(('images')))} or to the reminder app: {request.build_absolute_uri(reverse(('reminding-messages-list')))}"
+                redirect_message = f"You can now redirect to images service: {request.build_absolute_uri(reverse(('list-create-images')))} or to the reminder app: {request.build_absolute_uri(reverse(('reminding-messages-list')))}"
                 if request.user.is_authenticated:
                     return Response({
                         "message": "You are already logged in.",
@@ -48,7 +48,7 @@ class LoginAPIView(APIView):
         
 
 class LogoutAPIView(APIView):
-    def get(self, request):
+    def post(self, request):
         logout(request)
         return Response({"message": "Successfully logouted."})
     
