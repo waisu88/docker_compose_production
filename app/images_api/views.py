@@ -27,8 +27,9 @@ class ImagesApiOverview(APIView):
         routes = {
             "For LOGIN visit -->": request.build_absolute_uri(reverse(('authorization'))),
             "List-Create images": request.build_absolute_uri(reverse(('list-create-images'))),
-            "Image detail": request.build_absolute_uri(reverse(('list-create-images'))) + "<slug:slug>",
-            "Expiring link": request.build_absolute_uri(reverse(('list-create-images'))) + "<slug:slug>/expiring",
+            "Image detail": request.build_absolute_uri(reverse(('list-create-images'))) + "/<slug:slug>",
+            "Expiring link": request.build_absolute_uri(reverse(('list-create-images'))) + "/<slug:slug>/expiring",
+            "Review Code": "https://github.com/waisu88/docker_compose_production/tree/main/app/images_api"
         }
         return Response(routes)
 
