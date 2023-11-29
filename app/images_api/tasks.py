@@ -20,21 +20,7 @@ def create_thumbnails(user_id):
         th = thumbnailer.get_thumbnail({'size': size, 'crop': True})
         thumbnail_size = f"{size[0]}x{size[1]}px"
         Thumbnail.objects.create(created_by_id=user_id, base_image=base_image, thumbnail_image=str(th), thumbnail_size=thumbnail_size)
-
-
-
-    # sizes = []
-    # for tier in user_tiers.granted_tiers.all():
-    #     for thumbnail_size in tier.thumbnail_sizes.all():
-    #         th_size = (thumbnail_size.width, thumbnail_size.height)
-    #         if th_size not in sizes:
-    #             sizes.append(th_size)
-    # for size in sizes:
-    #     thumbnailer = get_thumbnailer(base_image.image)
-    #     th = thumbnailer.get_thumbnail({'size': size, 'crop': True})
-    #     thumbnail_size = f"{size[0]}x{size[1]}px"
-    #     Thumbnail.objects.create(created_by_id=user_id, base_image=base_image, thumbnail_image=str(th), thumbnail_size=thumbnail_size)          
-
+     
 
 @shared_task()
 def delete_expiring_link(*args, **kwargs):
@@ -42,4 +28,3 @@ def delete_expiring_link(*args, **kwargs):
     Celery task to delete an expiring link after a specified duration.
     """
     ExpiringLink.objects.get(id=kwargs['instance_id']).delete()
-

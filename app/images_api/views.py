@@ -73,7 +73,7 @@ class ImageListCreateAPIView(generics.ListCreateAPIView):
         if image_serializer.is_valid():
             user = self.request.user
             image_instance = image_serializer.save(uploaded_by=user)
-            slug_str = f"{image_serializer.validated_data['name']}-{image_instance.id}"
+            slug_str = f"{image_serializer.validated_data['name'].lower()}-{image_instance.id}"
             image_instance.slug = slug_str
             image_instance.save()
             create_thumbnails.delay(user.id)        
