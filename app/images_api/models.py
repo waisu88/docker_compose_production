@@ -106,4 +106,3 @@ def delete_expiring_link_image(sender, instance, **kwargs):
     Signal handler to delete associated expiring link image file when an ExpiringLink instance is deleted.
     """
     instance.expiring_image.delete(False)
-

@@ -26,7 +26,7 @@ urlpatterns = [
     path('', include('szymon_site.urls')),
 
     path('auth/', include('authorization.urls')),
-    path('images/', include('images_api.urls')),
+    path('imageupload/', include('images_api.urls')),
     path('reminder/', include('reminder.urls')),
 ]
 
