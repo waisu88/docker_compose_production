@@ -10,6 +10,10 @@ body {
     font-family: Verdana;
 }
 
+.about-me-section-name {
+    justify-content: center;
+}
+
 .profile-picture {
     width: 250px;
     height: auto;
@@ -60,7 +64,9 @@ body {
     width: auto;
 }
 
-
+.card > a {
+    text-align: center;
+}
 
 
 .language-name {
@@ -195,6 +201,11 @@ body {
     justify-content: start;
 }
 
+.arrow {
+    position: relative;
+}
+
+
 .maintenance {
     height: 155px;
     line-height: 30px;
@@ -202,10 +213,11 @@ body {
 
 .about-me-section-name {
     height: 25px;
+    justify-content: center;
 }
 
 .card {
-    width: 100px;
+    width: 150px;
     border-radius: .75rem;
     background-size: cover;
     cursor: pointer;
