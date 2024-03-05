@@ -28,6 +28,7 @@ urlpatterns = [
     path('auth/', include('authorization.urls')),
     path('imageupload/', include('images_api.urls')),
     path('reminder/', include('reminder.urls')),
+    path('create_mp3_translations/', include('save_mp3_translations.urls')),
 ]
 
 if settings.DEBUG:

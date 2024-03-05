@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Create MP3</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'mp3_style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h2>Write Your text and create MP3 to learn languages!</h2>
+        <form id="mp3-form" method="post">
+            {% csrf_token %}
+            <label for="id_words">Enter sentences or words. Remember to end every sentence/word with ".", "!" or "?"</label>
+            <!-- {{ form.words }} -->
+            <textarea id="id_words" name="words" rows="5" data-max-length="{{ max_length }}"></textarea> <!-- Użyj textarea zamiast input -->
+            <label for="id_enter_language">Choose enter language</label>
+            {{ form.enter_language }}
+            <label for="id_destination_language">Choose destination language</label>
+            {{ form.destination_language }}
+            <button type="submit">Generate MP3</button>
+        </form>
+    </div>
+    <script>
+        document.getElementById('mp3-form').addEventListener('submit', function(event) {
+            var max_length = document.getElementById('id_words').getAttribute('data-max-length');
+            var words = document.getElementById('id_words').value;
+            if (words.length === 0) {
+                alert('Type at least one word.')
+                event.preventDefault(); // Blokuj domyślną akcję przesyłania formularza
+            }
+            if (words.length > max_length) {
+                alert('You have exceeded the maximum number of characters allowed.')
+                event.preventDefault(); // Blokuj domyślną akcję przesyłania formularza
+            }
+        });
+    </script>
+
+</body>
+
+</html>

@@ -11,3 +11,8 @@ django-filter
 Pillow==9.4.0
 easy-thumbnails==2.8.5
 django-cleanup==7.0.0
+pandas
+openpyxl
+gTTS==2.5.1
+googletrans==4.0.0rc1
+pydub

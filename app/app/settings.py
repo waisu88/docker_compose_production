@@ -56,11 +56,14 @@ INSTALLED_APPS = [
     'authorization',
     'core',
     'api',
+
     'weatherapp',
     'szymon_site',
 
     'images_api',
     'reminder',
+
+    'save_mp3_translations.apps.SaveMp3TranslationsConfig',
 ]
 
 MIDDLEWARE = [
@@ -83,6 +86,7 @@ TEMPLATES = [
         'DIRS': [
             'szymon_site/templates/szymon_site',
             'reminder/templates/reminder',
+            'save_mp3_translations/templates/save_mp3_translations',
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -208,3 +212,4 @@ EMAIL_PORT = os.environ.get('EMAIL_PORT')
 EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS')
 EMAIL_USE_SSL = os.environ.get('EMAIL_USE_SSL')
 
+FFMPEG_PATH = '/usr/bin/ffmpeg'
