@@ -33,12 +33,10 @@ jobs:
           username: ec2-user
           key: ${{ secrets.AWS_SSH_KEY }}
           script: |
-            cd docker_compose_production
-            git pull origin &&
-<<<<<<< HEAD
-<<<<<<< HEAD
-            docker system prune -af &&
+            cd docker_compose_production            
+            git pull origin &&          
 
+            docker system prune -af &&
             docker compose -f docker-compose-deploy.yml build app celery celery-beat proxy &&
             docker compose -f docker-compose-deploy.yml stop app celery celery-beat proxy &&
             docker compose -f docker-compose-deploy.yml up --no-deps -d app celery celery-beat proxy
