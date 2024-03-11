@@ -35,7 +35,6 @@ jobs:
           script: |
             cd docker_compose_production            
             git pull origin &&          
-
             docker system prune -af &&
             docker compose -f docker-compose-deploy.yml build app celery celery-beat proxy &&
             docker compose -f docker-compose-deploy.yml stop app celery celery-beat proxy &&
