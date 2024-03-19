@@ -18,6 +18,7 @@ class Word(models.Model):
 class WordsPair(models.Model):
     base_word = models.ForeignKey(Word, related_name='base_word', on_delete=models.CASCADE)
     translated_word = models.ForeignKey(Word, related_name='translated_word', on_delete=models.CASCADE)
-
+    base_word_sentence = models.CharField(max_length=150, null=True, blank=True)
+    translated_word_sentence = models.CharField(max_length=150, null=True, blank=True)
     
 
