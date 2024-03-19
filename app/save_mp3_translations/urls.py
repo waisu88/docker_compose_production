@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import create_mp3_from_words
+from .views import create_mp3_from_words, wczytaj_dane
 
 urlpatterns = [
     path('wczytaj/', wczytaj_dane, name="wczytaj_dane"),
