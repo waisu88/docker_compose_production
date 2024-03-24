@@ -1,7 +1,7 @@
 import os
 import pandas as pd
 from .models import Language, Word, WordsPair
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponse
 from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework import generics
@@ -13,7 +13,7 @@ import re
 
 from gtts import gTTS
 from pydub import AudioSegment
-
+import csv
 
 
 @api_view(['POST', 'GET'])
@@ -111,10 +111,24 @@ def wczytaj_dane(request):
     return HttpResponse("<h1>Page was found</h1>")
 
 
-# class WordPairsAPIView(generics.ListAPIView):
-    # queryset = WordsPair.objects.all()
-    # serializer_class = WordsPairSerializer
+class WordPairsAPIView(generics.ListAPIView):
+    queryset = WordsPair.objects.all()
+    serializer_class = WordsPairSerializer
 
+
+
+def export_wordpairs_csv(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="wordpairs.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(['base_word', 'translated_word', 'translated_word_sentence'])
+
+    wordpairs = WordsPair.objects.all().values_list('base_word', 'translated_word', 'translated_word_sentence')
+    for wordpair in wordpairs:
+        writer.writerow(wordpair)
+
+    return response
 
 
 
