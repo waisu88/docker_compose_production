@@ -168,9 +168,21 @@ input:checked + label .description {
     transform: translateY(0) !important;
 }
 
-.card[for="c0"] {
-    background-image: url('./translations.png');
+#c0.card {
+    background-image: url("/static/images_overview.png");
 }
+
+.card {
+    position: relative;
+    display: inline-block;
+    width: 300px; /* dostosuj szerokość karty według potrzeb */
+    height: 200px; /* dostosuj wysokość karty według potrzeb */
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+}
+
+
 
 .card[for="c1"] {
     background-image: url('./images_overview.png');
@@ -185,11 +197,11 @@ input:checked + label .description {
 }
 
 .card[for="c4"] {
-    background-image: url('./questions.png');
+    background-image: url('./static/questions.png');
 }
 
 .card[for="c5"] {
-    background-image: url('./tkinter_rysuj2.png');
+    background-image: url('./static/tkinter_rysuj2.png');
 }
 
 .card-link {

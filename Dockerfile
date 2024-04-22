@@ -11,6 +11,7 @@ COPY /scripts /scripts
 
 WORKDIR /app
 EXPOSE 8000
+EXPOSE 5000
 
 
 RUN apk add --update --no-cache postgresql-client ffmpeg \
