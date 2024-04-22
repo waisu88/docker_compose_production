@@ -12,5 +12,5 @@ lang_choices = [
 
 class MP3Form(forms.Form):
     words = forms.CharField(label='Enter sentences or words. Remember to end every sentence/word with ".", "!" or "?"', max_length=500)
-    enter_language = forms.ChoiceField(label='Choose enter language', choices=lang_choices, initial='en')
+    enter_language = forms.ChoiceField(label='Choose enter language', choices=lang_choices, initial='hr')
     destination_language = forms.ChoiceField(label='Choose destination language', choices=lang_choices, initial='pl')
