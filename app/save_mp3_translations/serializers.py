@@ -9,5 +9,7 @@ class WordsPairSerializer(serializers.ModelSerializer):
         model = WordsPair   
         fields = [
             'base_word',
-            'translated_word'
+            'translated_word',
+            'base_word_sentence',
+            'translated_word_sentence'
         ]
