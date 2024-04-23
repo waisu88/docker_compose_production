@@ -101,6 +101,7 @@ body {
     width: 150px;
     border-radius: 10%;
     background-size: cover;
+    
     cursor: pointer;
     overflow: hidden;
     border-width: 10px;
@@ -172,17 +173,18 @@ input:checked + label .description {
     background-image: url("/static/images_overview.png");
 }
 
-.card {
+/* .card {
     position: relative;
     display: inline-block;
-    width: 300px; /* dostosuj szerokość karty według potrzeb */
-    height: 200px; /* dostosuj wysokość karty według potrzeb */
+    width: 300px;
     background-size: cover;
     background-position: center;
     border-radius: 10px;
+} */
+
+.card[for="c0"] {
+    background-image: url('./translations.png');
 }
-
-
 
 .card[for="c1"] {
     background-image: url('./images_overview.png');
@@ -197,11 +199,11 @@ input:checked + label .description {
 }
 
 .card[for="c4"] {
-    background-image: url('./static/questions.png');
+    background-image: url('./questions.png');
 }
 
 .card[for="c5"] {
-    background-image: url('./static/tkinter_rysuj2.png');
+    background-image: url('./tkinter_rysuj2.png');
 }
 
 .card-link {
