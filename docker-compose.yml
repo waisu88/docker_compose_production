@@ -27,19 +27,19 @@ services:
     depends_on:
       - db
 
-  flask_app:
-    build: 
-      context: .
-    container_name: flask_app
-    command: gunicorn --bind 0.0.0.0:5000 app:app
-    environment: 
-      - DATABASE_URL=postgresql://devuser:changeme@db:5432/devdb
-    volumes:
-      - ./flask_app:/flask_app
-    expose:
-      - 5000
-    depends_on:
-      - db
+  # flask_app:
+  #   build: 
+  #     context: .
+  #   container_name: flask_app
+  #   command: gunicorn --bind 0.0.0.0:5000 app:app
+  #   environment: 
+  #     - DATABASE_URL=postgresql://devuser:changeme@db:5432/devdb
+  #   volumes:
+  #     - ./flask_app:/flask_app
+  #   expose:
+  #     - 5000
+  #   depends_on:
+  #     - db
 
 
 

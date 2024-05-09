@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Create MP3</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'mp3_style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h2>Write Your text and create MP3 to learn languages!</h2>
+        <form id="mp3-form" method="post">
+            {% csrf_token %}
+            
+            <label for="id_words">Enter sentences or words. Remember to end every sentence/word with ".", "!" or "?"</label>
+            <!-- {{ form.words }} -->
+            <div>
+                <!-- Pętla generująca inputy tekstowe z pętlą dla każdego selecta -->
+                <div class="sentence">
+                    <input id="id_words1" name="words1" type="text">
+                    <select name="count1">
+                        <option value="1" selected>1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+                <div class="sentence">
+                    <input id="id_words2" name="words2" type="text">
+                    <select name="count2">
+                        <option value="1" selected>1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+                <div class="sentence">
+                <input id="id_words3" name="words3" type="text">
+                <select name="count3">
+                    <option value="1" selected>1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                </div>
+                <div class="sentence">
+                <input id="id_words4" name="words4" type="text">
+                <select name="count4">
+                    <option value="1" selected>1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                </div>
+                <div class="sentence">
+                <input id="id_words5" name="words5" type="text">
+                <select name="count5">
+                    <option value="1" selected>1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                </div>
+                <div class="sentence">
+                <input id="id_words6" name="words6" type="text">
+                <select name="count6">
+                    <option value="1" selected>1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                </div>
+                <div class="sentence">
+                <input id="id_words7" name="words7" type="text">
+                <select name="count7">
+                    <option value="1" selected>1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                </div>
+                <div class="sentence">
+                <input id="id_words8" name="words8" type="text">
+                <select name="count8">
+                    <option value="1" selected>1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                </div>
+                <div class="sentence">
+                <input id="id_words9" name="words9" type="text">
+                <select name="count9">
+                    <option value="1" selected>1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                </div>
+                <div class="sentence">
+                <input id="id_words10" name="words10" type="text">
+                <select name="count10">
+                    <option value="1" selected>1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                </div>
+    
+            </div>
+           
+            <label for="id_enter_language">Choose enter language</label>
+            {{ form.enter_language }}
+            <label for="id_destination_language">Choose destination language</label>
+            {{ form.destination_language }}
+            <button type="submit">Generate MP3</button>
+        </form>
+    </div>
+    <script>
+        document.getElementById('mp3-form').addEventListener('submit', function(event) {
+            var max_length = 100; // Zakładam, że maksymalna długość to 100 znaków
+            var inputs = document.querySelectorAll('.sentence input[type="text"]');
+            var words = "";
+            inputs.forEach(function(input) {
+                words += input.value.trim() + " ";
+            });
+            words = words.trim(); // Usuwa białe znaki z początku i końca
+            if (words.length === 0) {
+                alert('Type at least one word.')
+                event.preventDefault(); // Blokuj domyślną akcję przesyłania formularza
+            }
+            if (words.length > max_length) {
+                alert('You have exceeded the maximum number of characters allowed.')
+                event.preventDefault(); // Blokuj domyślną akcję przesyłania formularza
+            }
+        });
+    </script>
+
+</body>
+
+</html>
