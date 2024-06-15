@@ -7,6 +7,8 @@ lang_choices = [
     ("fr", "French"),
     ("ru", "Russian"),
     ("es", "Spanish"),
+    ("ko", "Korean"),
+    ("zh-CN", "Chinese (simplified)")
 ]
 
 
@@ -37,7 +39,7 @@ class MP3FinnForm(forms.Form):
 
 
 class MP3Form(forms.Form):
-    words = forms.CharField(label='Enter sentences or words. Remember to end every sentence/word with ".", "!" or "?"', max_length=500)
+    words = forms.CharField(label='Enter sentences or words. Remember to end every sentence/word with ".", "!" or "?"', max_length=3000)
     enter_language = forms.ChoiceField(label='Choose enter language', choices=lang_choices, initial='en')
     destination_language = forms.ChoiceField(label='Choose destination language', choices=lang_choices, initial='pl')
    
